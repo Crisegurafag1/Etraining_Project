@@ -4,6 +4,18 @@ from sqlalchemy import create_engine, text
 from db_connection import get_sqlalchemy_engine, CSV_PATH
 
 def load_and_transform_data(file_name, table_name, column_mappings={}, sep=';'):
+    """
+    Carga y transforma datos desde un archivo CSV en una tabla de la base de datos.
+
+    Args:
+        file_name (str): Nombre del archivo CSV.
+        table_name (str): Nombre de la tabla de destino en la base de datos.
+        column_mappings (dict): Diccionario opcional para renombrar columnas del CSV.
+        sep (str): Delimitador de columnas en el CSV (default es ';').
+
+    Returns:
+        None
+    """
     engine = get_sqlalchemy_engine()
     try:
         file_path = os.path.join(CSV_PATH, file_name)
@@ -41,6 +53,12 @@ def load_and_transform_data(file_name, table_name, column_mappings={}, sep=';'):
         print(f"Error al cargar datos en la tabla {table_name}: {e}")
 
 def run_etl():
+    """
+    Ejecuta el proceso ETL para cargar datos desde archivos CSV en la base de datos.
+    
+    Returns:
+        None
+    """
     print("Iniciando el proceso ETL")
 
     column_mappings = {

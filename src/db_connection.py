@@ -3,11 +3,15 @@ from dotenv import load_dotenv
 import mysql.connector
 from sqlalchemy import create_engine
 from mysql.connector import errorcode
-
-# Importar variables de entorno desde env.py
 from env import DB_USERNAME, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME, SSL_CA, CSV_PATH
 
 def get_mysql_connection():
+    """
+    Establecemos una conexión directa a la base de datos MySQL usando `mysql.connector`.
+    
+    Returns:
+        connection: Objeto de conexión a MySQL
+    """
     try:
         connection = mysql.connector.connect(
             user=DB_USERNAME,
@@ -30,6 +34,12 @@ def get_mysql_connection():
         return None
 
 def get_sqlalchemy_engine():
+    """
+    Establece una conexión ORM a la base de datos MySQL utilizando SQLAlchemy.
+    
+    Returns:
+        engine: Objeto de motor de SQLAlchemy para interactuar con la base de datos.
+    """
     connection_string = f'mysql+mysqlconnector://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}?ssl_ca={SSL_CA}'
     engine = create_engine(connection_string)
     return engine
