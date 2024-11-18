@@ -1,20 +1,11 @@
+import os
+from dotenv import load_dotenv
 import mysql.connector
 from sqlalchemy import create_engine
 from mysql.connector import errorcode
-import os
-from dotenv import load_dotenv
 
-# Cargar variables de entorno desde el archivo .env
-load_dotenv()
-
-# Configuración de la conexión a la base de datos MySQL con SSL
-DB_USERNAME = os.getenv('DB_USERNAME')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-DB_HOST = os.getenv('DB_HOST')
-DB_PORT = int(os.getenv('DB_PORT'))
-DB_NAME = os.getenv('DB_NAME')
-SSL_CA = os.getenv('SSL_CA')
-CSV_PATH = os.getenv('CSV_PATH')
+# Importar variables de entorno desde env.py
+from env import DB_USERNAME, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME, SSL_CA, CSV_PATH
 
 def get_mysql_connection():
     try:
@@ -37,8 +28,6 @@ def get_mysql_connection():
         else:
             print(f"Error al conectar a la base de datos: {err}")
         return None
-
-
 
 def get_sqlalchemy_engine():
     connection_string = f'mysql+mysqlconnector://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}?ssl_ca={SSL_CA}'
